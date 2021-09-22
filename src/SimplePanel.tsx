@@ -37,6 +37,12 @@ export class SimplePanel extends PureComponent<Props> {
       context[elt.name] = elt.current.text;
     });
 
+    // Expose Grafana functionalities
+    const grafana = {
+      templateSrv: templateSrv,
+      locationSrv: getLocationSrv()
+    }
+
     //const NbValues = data.series[0].rows.length;
 
     let config = this.props.options.config || defaults.config;
@@ -50,8 +56,8 @@ export class SimplePanel extends PureComponent<Props> {
     let error: any;
     try {
       if (this.props.options.script !== '' && this.props.data.state !== 'Error') {
-        var f = new Function('data,variables', this.props.options.script);
-        parameters = f(this.props.data, context);
+        var f = new Function('data,variables,grafana', this.props.options.script);
+        parameters = f(this.props.data, context, grafana);
         if (!parameters) {
           throw new Error('Script must return values');
         }
