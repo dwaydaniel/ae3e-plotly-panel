@@ -40,8 +40,8 @@ export class SimplePanel extends PureComponent<Props> {
     // Expose Grafana functionalities
     const grafana = {
       templateSrv: templateSrv,
-      locationSrv: getLocationSrv()
-    }
+      locationSrv: getLocationSrv(),
+    };
 
     //const NbValues = data.series[0].rows.length;
 
@@ -115,9 +115,14 @@ export class SimplePanel extends PureComponent<Props> {
             width: '100%',
             height: '100%',
           }}
+          divId={parameters.name || ''}
           data={parameters.data ? merge(data, parameters.data, { arrayMerge: combineMerge }) : data}
           frames={parameters.frames ? merge(data, parameters.frames, { arrayMerge: combineMerge }) : frames}
-          onInitialized={(figure: any, graphDiv: any) => this.setState({ figure: figure, graphDiv: graphDiv })}
+          onInitialized={(figure: any, graphDiv: any) => {
+            var f = new Function('graphDiv', this.props.options.oninit);
+            this.setState({ figure: figure, graphDiv: graphDiv });
+            f(graphDiv);
+          }}
           //layout={ {autosize:true, height:this.props.height, title: this.props.options.title} }
           layout={parameters.layout ? merge(layout, parameters.layout) : layout}
           config={parameters.config ? merge(config, parameters.config) : config}

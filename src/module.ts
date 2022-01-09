@@ -79,5 +79,18 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
         language: 'javascript',
       },
       defaultValue: defaults.onclick,
+    }).addCustomEditor({
+      id: 'oninit',
+      path: 'oninit',
+      name: 'On init script',
+      description: `
+            Script executed when chart is loaded.
+            f(graphDiv){...your code...}`,
+      editor: PanelOptionCode,
+      category: ['Init script'],
+      settings: {
+        language: 'javascript',
+      },
+      defaultValue: '',
     });
 });

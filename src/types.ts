@@ -6,6 +6,7 @@ export interface SimpleOptions {
   frames: any[];
   script: string;
   onclick: string;
+  oninit: string;
 }
 
 export type EditorCodeType = string | undefined;
@@ -47,4 +48,5 @@ var trace = {
 return {data:[trace],layout:{title:'My Chart'}};`,
   onclick: `console.log(data)
 window.updateVariables({query:{'var-project':'test'}, partial: true})`,
+  oninit: ''
 };
